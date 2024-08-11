@@ -28,3 +28,8 @@ def vectorized_result(j):
     e = np.zeros((10, 1))
     e[j] = 1.0
     return e
+
+
+if __name__ == "__main__":
+    data = load_data()
+    print(data[0][0].shape)

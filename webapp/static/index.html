@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        canvas {
+            /* rotate 90deg and flip */
+            transform: rotate(-90deg) scaleX(-1);
+        }
+    </style>
+</head>
+<body>
+
+    <div
+        class="w-full flex items-center justify-center gap-4 p-5"
+    >
+        <div
+            class="border-2 border-slate-500 bg-slate-200 flex items-center justify-center p-2 rounded-lg"
+        >
+            <canvas id="canvas" width="280px" height="280px" class="bg-white"></canvas>
+        </div>
+
+        <div
+            class="w-[200px] h-[200px] border border-slate-600 flex items-center justify-center relative"
+        >
+            <h1 id="result" class="text-7xl"></h1>
+
+            <div
+                class="absolute top-0 left-[5px] "
+            >  
+                Computer think it's: 
+            </div>
+        </div>
+    </div>
+
+    <div
+        class="w-full bg-slate-500 flex items-center justify-center gap-4 p-5"
+    >
+        <button 
+            id="submit"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+            Submit
+        </button>
+        <button id="random">
+            Load Random
+        </button>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>

@@ -26,16 +26,18 @@ async def clasify_image(image: ImageInputData):
 
     prediction = np.argmax(result)
 
-    return {"prediction": int(prediction)}
+    probability_percentage = [[prob[0] * 100] for prob in result]
+
+    return {
+        "prediction": int(prediction),
+        "probabitlities": probability_percentage
+    }
 
 @app.get("/loadRandom")
 async def load_random_image():
     _, _, test_data = rd.load_data()
 
     random_index = np.random.randint(0, 10000)
-
     return {"data": test_data[0][random_index].tolist()}
 
 app.mount("/", StaticFiles(directory="static", html=True), name="static")
-    
-    

@@ -2,6 +2,8 @@ const canvas = document.getElementById('canvas');
 const submit_button = document.getElementById('submit');
 const random_button = document.getElementById('random');
 const result = document.getElementById('result');
+const clear_button = document.getElementById('clear');
+const probabilityBars = document.getElementsByClassName("prob");
 
 const ctx = canvas.getContext('2d');
 
@@ -56,7 +58,7 @@ draw_pixel_grid();
 function fill_pixel(x, y) {
     const index = x * gridSize + y;
 
-    const brushSize = 2; // 1.5 is good 
+    const brushSize = 1.3; // 1.5 is good 
     for (let i = 0; i < gridSize; i++) {
         for (let j = 0; j < gridSize; j++) {
             const distance = Math.sqrt((x - i) ** 2 + (y - j) ** 2);
@@ -130,10 +132,12 @@ function drawLine(x0, y0, x1, y1) {
 
 function mapGrayValues(grayValues = []) {
     clear();
+
+    console.log(grayValues)
     
     for (let y = 0; y < gridSize; y++) {
         for (let x = 0; x < gridSize; x++) {
-            const index = y * gridSize + x;
+            const index = x * gridSize + y;
             if (index < grayValues.length) {
                 pixels[y * gridSize + x].updateColor(grayValues[index]);
             }
@@ -145,6 +149,26 @@ function clear() {
     ctx.fillStyle = 'white';
     ctx.fillRect(0, 0, width, height);
     draw_pixel_grid();
+    result.innerHTML = '';
+}
+
+function changeProbabilityBars(probabilities) {
+    for (let i = 0; i < probabilities.length; i++) {
+        probabilityBars[i].style.width = `${probabilities[i]}%`;
+        probabilityBars[i].style.backgroundColor = `rgba(10, 100, 20, ${probabilities[i] / 100})`;
+    }
+
+    console.log(probabilityBars)
+}
+
+function getImageData() {
+    const data = [];
+    for (let i = 0; i < gridSize; i++) {
+        for (let j = 0; j < gridSize; j++) {
+            data.push(pixels[j * gridSize + i].grayValue);
+        }
+    }
+    return data;
 }
 
 submit_button.addEventListener('click', () => {
@@ -156,12 +180,12 @@ submit_button.addEventListener('click', () => {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ image_data: data })
+        body: JSON.stringify({ image_data: getImageData() })
     })
     .then(response => response.json())
     .then(data => {
-        console.log(data);
         result.innerHTML = data.prediction;
+        changeProbabilityBars(data.probabitlities)
     })
     .catch(error => {
         console.error('Error:', error);
@@ -182,4 +206,8 @@ random_button.addEventListener('click', () => {
     .catch(error => {
         console.error('Error:', error);
     });
+});
+
+clear_button.addEventListener('click', () => {
+    clear();
 });

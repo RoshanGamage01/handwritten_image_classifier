@@ -5,12 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        canvas {
-            /* rotate 90deg and flip */
-            transform: rotate(-90deg) scaleX(-1);
-        }
-    </style>
 </head>
 <body>
 
@@ -34,19 +28,103 @@
                 Computer think it's: 
             </div>
         </div>
+
+        <div
+            class="w-[280px] h-[280px] border border-slate-600 bg-slate-500 text-white relative"
+        >
+            <div class="w-[280px] h-2 flex items-baseline justify-between absolute -bottom-2 -left-[1px]">
+                <div
+                    class="h-full w-1 bg-black"
+                >
+
+                </div>
+
+                <div
+                    class="h-full w-1 bg-black"
+                >
+
+                </div>
+
+                <div
+                    class="h-full w-1 bg-black"
+                >
+
+                </div>
+            </div>
+
+            <div
+                class="h-[28px] prob flex items-center justify-start text-lg px-1 font-bold"
+            >
+                0
+            </div>
+            <div
+                class="h-[28px] prob flex items-center justify-start text-lg px-1 font-bold"
+            >
+                1
+            </div>
+            <div
+                class="h-[28px] prob flex items-center justify-start text-lg px-1 font-bold"
+            >
+                2
+            </div>
+            <div
+                class="h-[28px] prob flex items-center justify-start text-lg px-1 font-bold"
+            >
+                3
+            </div>
+            <div
+                class="h-[28px] prob flex items-center justify-start text-lg px-1 font-bold"
+            >
+                4
+            </div>
+            <div
+                class="h-[28px] prob flex items-center justify-start text-lg px-1 font-bold"
+            >
+                5
+            </div>
+            <div
+                class="h-[28px] prob flex items-center justify-start text-lg px-1 font-bold"
+            >
+                6
+            </div>
+            <div
+                class="h-[28px] prob flex items-center justify-start text-lg px-1 font-bold"
+            >
+                7
+            </div>
+            <div
+                class="h-[28px] prob flex items-center justify-start text-lg px-1 font-bold"
+            >
+                8
+            </div>
+            <div
+                class="h-[28px] prob flex items-center justify-start text-lg px-1 font-bold"
+            >
+                9
+            </div>
+        </div>
     </div>
 
     <div
-        class="w-full bg-slate-500 flex items-center justify-center gap-4 p-5"
+        class="w-full flex items-center justify-center gap-4 p-5"
     >
         <button 
             id="submit"
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         >
-            Submit
+            Predict
         </button>
-        <button id="random">
-            Load Random
+        <button 
+            id="random"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+            Load Random Number
+        </button>
+        <button 
+            id="clear"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+            Clear
         </button>
     </div>
 

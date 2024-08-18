@@ -40,12 +40,14 @@ class Pixel {
 
 const pixels = [];
 
+// Load pixels
 for (let i = 0; i < gridSize; i++) {
     for (let j = 0; j < gridSize; j++) {
         pixels.push(new Pixel(i, j));
     }
 }
 
+// Draw pixel grid
 function draw_pixel_grid() {
     for (let i = 0; i < gridSize; i++) {
         for (let j = 0; j < gridSize; j++) {
@@ -58,6 +60,7 @@ function draw_pixel_grid() {
 draw_pixel_grid();
 
 
+// Fill pixels according to mouse position and brush size
 function fill_pixel(x, y) {
     const index = x * gridSize + y;
 
@@ -73,6 +76,7 @@ function fill_pixel(x, y) {
         }
     }
 }
+
 
 canvas.addEventListener('mousedown', (event) => {
     drawing = true;
@@ -110,6 +114,8 @@ function getMousePosition(event) {
     return { x, y };
 }
 
+// Bresenham's line algorithm
+// https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
 function drawLine(x0, y0, x1, y1) {
     const dx = Math.abs(x1 - x0);
     const dy = Math.abs(y1 - y0);
@@ -133,6 +139,7 @@ function drawLine(x0, y0, x1, y1) {
     }
 }
 
+// Map predifined gray values to pixels
 function mapGrayValues(grayValues = []) {
     clear();
     
@@ -148,6 +155,7 @@ function mapGrayValues(grayValues = []) {
     submit();
 }
 
+// Clear pixel grid
 function clear() {
     ctx.fillStyle = 'white';
     ctx.fillRect(0, 0, width, height);
@@ -160,6 +168,7 @@ function clear() {
     }
 }
 
+// Map predicted probabilities to probability bars
 function changeProbabilityBars(probabilities) {
     for (let i = 0; i < probabilities.length; i++) {
         probabilityBars[i].style.width = `${probabilities[i]}%`;
@@ -167,6 +176,7 @@ function changeProbabilityBars(probabilities) {
     }
 }
 
+// Get gray values of pixel grid and return as array
 function getImageData() {
     const data = [];
     for (let i = 0; i < gridSize; i++) {
@@ -177,24 +187,31 @@ function getImageData() {
     return data;
 }
 
+// Submit image data to Network
 function submit() {
     submit_button.click();
 }
 
+// Debounce submit function to prevent multiple requests
 function debounceSubmit() {
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(submit, 300);
 }
 
+// Throttle submit function to prevent multiple requests
 function throttleSubmit() {
     const now = new Date().getTime();
     const timeSinceLastCall = now - lastCall;
 
-    if (timeSinceLastCall >= 500) { // Adjust the interval as needed
-        submit(); // Your submit function
+    if (timeSinceLastCall >= 500) {
+        submit();
         lastCall = now;
     }
 }
+
+
+// Button Event listeners
+
 
 submit_button.addEventListener('click', () => {
     const data = pixels.map(pixel => pixel.grayValue);

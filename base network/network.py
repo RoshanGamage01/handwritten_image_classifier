@@ -1,5 +1,6 @@
 import numpy as np
 import read_data
+import json
 
 def sigmoid_activation(x):
     return 1.0 / (1.0 + np.exp(-x))
@@ -73,12 +74,35 @@ class Network:
             gradients_of_biases[-layer] = default_gradient
 
         return(gradients_of_biases, gradients_of_weight)
+    
+    def save_parameters(self, file_name):
+        weight_biases = {
+            "weights": [w.tolist() for w in self.weights],
+            "biases": [b.tolist() for b in self.biases]
+        }
+
+        with open(file_name, "w") as file:
+            json.dump(weight_biases, file)
+    
+    def load_parameters(self, file_name):
+        with open(file_name, "r") as file:
+            weight_biases = json.load(file)
+
+        self.weights = [np.array(w) for w in weight_biases["weights"]]
+        self.biases = [np.array(b) for b in weight_biases["biases"]]
 
 if __name__ == "__main__":
-    data = read_data.load_data_wrapper()
+    isPretrained = False
+    data = read_data.load_data_wrapper(True)
 
-    network = Network([784, 30, 10])
-    network.gradient_descent(list(data[0]), 30, 10, 0.01)
+    network = Network([784, 30, 30, 10])
+
+    if isPretrained:
+        network.load_parameters("parameters.json")
+    else:
+        network.gradient_descent(list(data[0]), 30, 10, 3.0)
+        network.save_parameters("parameters.json")
+    
 
     data_1 = list(data[2])
 

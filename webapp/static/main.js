@@ -12,8 +12,9 @@ const height = canvas.height
 const pixelSize = 10;
 const gridSize = 28;
 
+let debounceTimer;
+let lastCall = 0;
 let drawing = false;
-
 let lastPosition = null;
 
 class Pixel {
@@ -29,10 +30,11 @@ class Pixel {
     }
 
     updateColor(grayValue) {
-        this.grayValue = grayValue;
+        this.grayValue = Math.min(1, this.grayValue + grayValue);
 
         ctx.fillStyle = `rgba(0, 0, 0, ${this.grayValue})`;
         ctx.fillRect(this.x * pixelSize, this.y * pixelSize, pixelSize, pixelSize);
+        throttleSubmit();
     }
 }
 
@@ -48,6 +50,7 @@ function draw_pixel_grid() {
     for (let i = 0; i < gridSize; i++) {
         for (let j = 0; j < gridSize; j++) {
             pixels[i * gridSize + j].draw();
+            pixels[i * gridSize + j].grayValue = 0;
         }
     }
 }
@@ -62,7 +65,7 @@ function fill_pixel(x, y) {
     for (let i = 0; i < gridSize; i++) {
         for (let j = 0; j < gridSize; j++) {
             const distance = Math.sqrt((x - i) ** 2 + (y - j) ** 2);
-            const grayValue = 1 - distance / brushSize;
+            const grayValue = 1-distance / brushSize;
             
             if (grayValue > 0) {
                 pixels[i * gridSize + j].updateColor(grayValue);
@@ -132,8 +135,6 @@ function drawLine(x0, y0, x1, y1) {
 
 function mapGrayValues(grayValues = []) {
     clear();
-
-    console.log(grayValues)
     
     for (let y = 0; y < gridSize; y++) {
         for (let x = 0; x < gridSize; x++) {
@@ -143,6 +144,8 @@ function mapGrayValues(grayValues = []) {
             }
         }
     }
+
+    submit();
 }
 
 function clear() {
@@ -150,6 +153,11 @@ function clear() {
     ctx.fillRect(0, 0, width, height);
     draw_pixel_grid();
     result.innerHTML = '';
+
+    for (let i = 0; i < probabilityBars.length; i++) {
+        probabilityBars[i].style.width = '0%';
+        probabilityBars[i].style.backgroundColor = 'rgba(0, 0, 0, 0)';
+    }
 }
 
 function changeProbabilityBars(probabilities) {
@@ -157,8 +165,6 @@ function changeProbabilityBars(probabilities) {
         probabilityBars[i].style.width = `${probabilities[i]}%`;
         probabilityBars[i].style.backgroundColor = `rgba(10, 100, 20, ${probabilities[i] / 100})`;
     }
-
-    console.log(probabilityBars)
 }
 
 function getImageData() {
@@ -169,6 +175,25 @@ function getImageData() {
         }
     }
     return data;
+}
+
+function submit() {
+    submit_button.click();
+}
+
+function debounceSubmit() {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(submit, 300);
+}
+
+function throttleSubmit() {
+    const now = new Date().getTime();
+    const timeSinceLastCall = now - lastCall;
+
+    if (timeSinceLastCall >= 500) { // Adjust the interval as needed
+        submit(); // Your submit function
+        lastCall = now;
+    }
 }
 
 submit_button.addEventListener('click', () => {

@@ -5,6 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .percent_1, .percent_2, .percent_3 {
+            position: relative;
+        }
+
+        .percent_1::after{
+            content: "0%";
+        }
+
+        .percent_2::after{
+            content: "50%";
+        }
+
+        .percent_3::after{
+            content: "100%";
+        }
+
+        .percent_1::after, .percent_2::after, .percent_3::after {
+            position: absolute;
+            top: 5px;
+            left: 0;
+            width: fit-content;
+            height: fit-content;
+            background-color: transparent;
+            color: #000;
+        }
+    </style>
 </head>
 <body>
 
@@ -20,10 +47,10 @@
         <div
             class="w-[200px] h-[200px] border border-slate-600 flex items-center justify-center relative"
         >
-            <h1 id="result" class="text-7xl"></h1>
+            <h1 id="result" class="text-7xl select-none"></h1>
 
             <div
-                class="absolute top-0 left-[5px] "
+                class="absolute top-0 left-[5px] select-none"
             >  
                 Computer think it's: 
             </div>
@@ -34,19 +61,19 @@
         >
             <div class="w-[280px] h-2 flex items-baseline justify-between absolute -bottom-2 -left-[1px]">
                 <div
-                    class="h-full w-1 bg-black"
+                    class="h-full w-1 bg-black percent_1"
                 >
 
                 </div>
 
                 <div
-                    class="h-full w-1 bg-black"
+                    class="h-full w-1 bg-black percent_2"
                 >
 
                 </div>
 
                 <div
-                    class="h-full w-1 bg-black"
+                    class="h-full w-1 bg-black percent_3"
                 >
 
                 </div>
@@ -125,6 +152,67 @@
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         >
             Clear
+        </button>
+    </div>
+    <div
+        class="w-full flex items-center justify-center gap-4 p-5"
+    >
+        <div class="text-xl">
+            No It is -
+        </div>
+        <button 
+            id="submit"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+            1
+        </button>
+        <button 
+            id="random"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+            2
+        </button>
+        <button 
+            id="clear"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+            3
+        </button>
+        <button 
+            id="clear"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+            4
+        </button>
+        <button 
+            id="clear"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+            5
+        </button>
+        <button 
+            id="clear"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+            6
+        </button>
+        <button 
+            id="clear"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+            7
+        </button>
+        <button 
+            id="clear"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+            8
+        </button>
+        <button 
+            id="clear"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+            9
         </button>
     </div>
 

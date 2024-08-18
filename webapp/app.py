@@ -1,6 +1,7 @@
 import numpy as np
 import network as nn
 import read_data as rd
+import matplotlib.pyplot as plt
 
 from fastapi import FastAPI
 from pydantic import BaseModel
@@ -16,9 +17,11 @@ class ImageInputData(BaseModel):
 @app.post("/clasify")
 async def clasify_image(image: ImageInputData):
     image_data = np.array(image.image_data)
+    # plt.imshow(np.reshape(image.image_data, (28, 28)), cmap='gray')
+    # plt.show()
     
     network = nn.Network([784, 30, 30, 10])
-    network.load_parameters("./data/parameters_94acc.json")
+    network.load_parameters("./data/parameters_95acc_opt.json")
 
     image_data = image_data.reshape(-1, 1)
 
